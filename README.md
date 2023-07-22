@@ -26,4 +26,4 @@ Once you've done that, do the following steps:
 
 ### Questions/comments/suggestions?
 
-I'd love to hear from more experienced Rustaceans about how I can write more idiomatic Rust. I'm always accessible by email at <stephen.tanksley@gmail.com>.
+I'd love to hear from more experienced Rustaceans about how I can write more idiomatic Rust. I'm always accessible by email at <stephen.tanksley@gmail.com> or on [Linkedin](https://www.linkedin.com/in/stephentanksley)
