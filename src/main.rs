@@ -1,4 +1,4 @@
-use rust_collatz::{collatz, produce_vec};
+use rust_collatz::{collatz, collect_input, produce_vec};
 use std::collections::HashMap;
 use std::process::exit;
 
@@ -21,7 +21,9 @@ fn main() {
     // initialize a HashMap to collect the results
     let mut mem_table: HashMap<i32, Vec<i32>> = HashMap::new();
 
-    let boundaries = RangeBounds { start: 1, end: 20 };
+    let (start, end) = collect_input();
+
+    let boundaries = RangeBounds { start, end };
 
     for num in boundaries.start..=boundaries.end {
         if num <= 0 {
