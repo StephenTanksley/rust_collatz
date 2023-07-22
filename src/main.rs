@@ -1,4 +1,4 @@
-use http_experiments::{collatz, produce_vec};
+use rust_collatz::{collatz, produce_vec};
 use std::collections::HashMap;
 use std::process::exit;
 
