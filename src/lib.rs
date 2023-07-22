@@ -1,3 +1,37 @@
+use std::io;
+
+pub fn collect_input() -> (i32, i32) {
+    println!(" *** Please input the start of desired range (an integer > 0).\n");
+
+    let mut start = String::new();
+
+    io::stdin()
+        .read_line(&mut start)
+        .expect("Failed to read line");
+
+    // We need to explicitly convert the guess from a String to u32.
+    let start: i32 = match start.trim().parse() {
+        Ok(num) => num,
+        Err(_) => 0,
+    };
+
+    println!(" *** Please input the end of desired range (an integer > 0 AND > start).\n");
+
+    let mut end = String::new();
+
+    io::stdin()
+        .read_line(&mut end)
+        .expect("Failed to read line");
+
+    // We need to explicitly convert the guess from a String to u32.
+    let end: i32 = match end.trim().parse() {
+        Ok(num) => num,
+        Err(_) => 0,
+    };
+
+    (start, end)
+}
+
 pub fn collatz(num: i32) -> i32 {
     let next_num: i32;
     if num == 1 {
