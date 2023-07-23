@@ -61,15 +61,19 @@ pub fn produce_vec(num: i32, ref_hashmap: &HashMap<i32, Vec<i32>>) -> Vec<i32> {
     num_vec.push(current_number);
 
     // Standard stuff - keep doing the thing we want until the final condition is reached (current_number == 1).
+    // This is basically the soul of a recursive algorithm in that we're establishing a base case and working through
+    // an iterable until we hit it.
     while current_number != 1 {
         let new_number = collatz(current_number);
 
-        // If the entry exists within the hashmap, we want to use that instead of recomputing.
+        // If the entry exists within the hashmap, we want to use that instead of recomputing the whole sequence.
         if ref_hashmap.contains_key(&new_number) {
             num_vec.extend(&ref_hashmap[&new_number]);
             // un-comment for debug info
             // println!("Extended item: {:?}", num_vec);
             current_number = 1;
+
+        // otherwise we just continue working through the sequence and we'll try to complete from the HashTable next time.
         } else {
             current_number = new_number;
             num_vec.push(current_number);
