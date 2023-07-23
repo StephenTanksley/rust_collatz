@@ -1,4 +1,4 @@
-use std::io;
+use std::{collections::HashMap, io};
 
 pub fn collect_input() -> (i32, i32) {
     println!(" *** Please input the start of desired range (an integer > 0).\n");
@@ -9,7 +9,7 @@ pub fn collect_input() -> (i32, i32) {
         .read_line(&mut start)
         .expect("Failed to read line");
 
-    // We need to explicitly convert the guess from a String to u32.
+    // We need to explicitly convert the guess from a String to i32.
     let start: i32 = match start.trim().parse() {
         Ok(num) => num,
         Err(_) => 0,
@@ -23,7 +23,7 @@ pub fn collect_input() -> (i32, i32) {
         .read_line(&mut end)
         .expect("Failed to read line");
 
-    // We need to explicitly convert the guess from a String to u32.
+    // We need to explicitly convert the guess from a String to i32.
     let end: i32 = match end.trim().parse() {
         Ok(num) => num,
         Err(_) => 0,
@@ -46,7 +46,7 @@ pub fn collatz(num: i32) -> i32 {
     next_num
 }
 
-pub fn produce_vec(num: i32) -> Vec<i32> {
+pub fn produce_vec(num: i32, ref_hashmap: &HashMap<i32, Vec<i32>>) -> Vec<i32> {
     /*
         TODO: For the sake of safety, we'll need to make sure that the number passed in is greater than 0.
     */
@@ -61,10 +61,25 @@ pub fn produce_vec(num: i32) -> Vec<i32> {
     num_vec.push(current_number);
 
     // Standard stuff - keep doing the thing we want until the final condition is reached (current_number == 1).
+    // This is basically the soul of a recursive algorithm in that we're establishing a base case and working through
+    // an iterable until we hit it.
     while current_number != 1 {
         let new_number = collatz(current_number);
-        current_number = new_number;
-        num_vec.push(current_number);
+
+        // If the entry exists within the hashmap, we want to use that instead of recomputing the whole sequence.
+        if ref_hashmap.contains_key(&new_number) {
+            num_vec.extend(&ref_hashmap[&new_number]);
+            // un-comment for debug info
+            // println!("Extended item: {:?}", num_vec);
+            current_number = 1;
+
+        // otherwise we just continue working through the sequence and we'll try to complete from the HashTable next time.
+        } else {
+            current_number = new_number;
+            num_vec.push(current_number);
+            // un-comment for debug info
+            // println!("Non-extended item: {:?}", num_vec);
+        }
     }
     num_vec
 }
